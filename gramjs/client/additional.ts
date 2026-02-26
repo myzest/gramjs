@@ -23,7 +23,7 @@ import {
 import { IGE } from "../crypto/IGE";
 
 import models from "./model.js";
-const { sleep } = helpers;
+const { asleep } = helpers;
 const { StringSession } = sessions;
 const { BinaryReader } = extensions;
 
@@ -1046,7 +1046,7 @@ export async function returnSingleSimpleClient(props) {
     client._initRequest = new Api.InitConnection(initRequest);
     try {
         const preConnect = Date.now();
-        const result = await Promise.race([client.connect(), sleep(50000)]);
+        const result = await Promise.race([client.connect(), asleep(50000)]);
         const curConnect = Math.ceil((Date.now() - preConnect) / 1000);
         console.log(`${phone}---使用${curConnect}秒连接客户端-${!!result}`);
         return client;
@@ -1100,15 +1100,15 @@ export async function createSingleSimpleClient(props) {
         const preConnect = Date.now();
         const connectResult = await Promise.race([
             client.connect(),
-            sleep(60000),
+            asleep(60000),
         ]);
         const curConnect = Math.ceil((Date.now() - preConnect) / 1000);
         console.log(
             `${phone}---使用${curConnect}秒连接客户端-${!!connectResult}`
         );
-        const result = await Promise.race([callback(client), sleep(140000)]);
+        const result = await Promise.race([callback(client), asleep(140000)]);
         await clientDestroy(client);
-        if (_.isNil(result)) {
+        if (_.isNull(result)) {
             throw new CustomError({
                 code: 504,
                 msg: "TG呆滞时间过久",

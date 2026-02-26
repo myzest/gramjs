@@ -433,6 +433,20 @@ export const sleep = (ms: number, isUnref: boolean = false) =>
     );
 
 /**
+ * Sleeps a specified amount of time
+ * @param ms time in milliseconds
+ * @param isUnref make a timer unref'ed
+ * @returns {Promise}
+ */
+export const asleep = (ms: number, isUnref: boolean = true) => {
+    return new Promise((resolve) => {
+        isUnref && isNode
+            ? setTimeout(() => resolve(null), ms).unref()
+            : setTimeout(() => resolve(null), ms);
+    });
+};
+
+/**
  * Helper to export two buffers of same length
  * @returns {Buffer}
  */
@@ -526,3 +540,4 @@ export function _entityType(entity: EntityLike) {
     // 'Empty' in name or not found, we don't care, not a valid entity.
     throw new Error(`${entity} does not have any entity type`);
 }
+

@@ -12,6 +12,7 @@ import * as tgClient from "./TelegramClient";
 import * as updates from "./updates";
 import * as uploads from "./uploads";
 import * as users from "./users";
+import * as additional from "./additional";
 
 export {
     twoFA,
@@ -28,4 +29,6 @@ export {
     updates,
     uploads,
     users,
+    additional,
 };
+

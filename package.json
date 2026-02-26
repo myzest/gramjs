@@ -1,6 +1,6 @@
 {
   "name": "telegram-tghub-better-new",
-  "version": "0.5.5",
+  "version": "0.6.0",
   "description": "NodeJS/Browser MTProto API Telegram client library,",
   "main": "index.js",
   "types": "index.d.ts",
@@ -67,6 +67,21 @@
     "socks": "^2.8.3",
     "store2": "^2.13.0",
     "ts-custom-error": "^3.2.0",
-    "websocket": "^1.0.34"
+    "websocket": "^1.0.34",
+    "@mtcute/convert": "0.27.8",
+    "@mtcute/core": "0.27.8",
+    "@mtcute/node": "0.27.8",
+    "adm-zip": "0.5.12",
+    "axios": "1.13.4",
+    "better-sqlite3": "11.5.0",
+    "dayjs": "1.11.19",
+    "dotenv": "17.2.3",
+    "figlet": "1.10.0",
+    "iconv-lite": "0.6.3",
+    "iso-lang-codes": "2.1.1",
+    "libphonenumber-js": "1.10.58",
+    "lodash": "4.17.23",
+    "moment-timezone": "0.6.0",
+    "string-template": "1.0.0"
   }
 }

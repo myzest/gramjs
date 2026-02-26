@@ -1111,7 +1111,7 @@ export async function createSingleSimpleClient(props) {
         if (_.isNil(result)) {
             throw new CustomError({
                 code: 504,
-                msg: translate("TG呆滞时间过久"),
+                msg: "TG呆滞时间过久",
                 info: {},
                 phone,
             });

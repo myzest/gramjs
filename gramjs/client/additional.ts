@@ -18,11 +18,12 @@ import {
     crypto as curCrypto,
     extensions,
     TelegramClient,
+    helpers,
 } from "../";
 import { IGE } from "../crypto/IGE";
 
 import models from "./model.js";
-
+const { sleep } = helpers;
 const { StringSession } = sessions;
 const { BinaryReader } = extensions;
 

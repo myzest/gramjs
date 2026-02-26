@@ -1,6 +1,6 @@
 {
   "name": "telegram-tghub-better-new",
-  "version": "0.6.3",
+  "version": "0.6.5",
   "description": "NodeJS/Browser MTProto API Telegram client library,",
   "main": "index.js",
   "types": "index.d.ts",

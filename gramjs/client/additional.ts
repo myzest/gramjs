@@ -1014,7 +1014,7 @@ export async function returnSingleSimpleClient(props) {
     const session = new StoreSession();
     sessionInfo = _.assign(
         {},
-        tgClientType.newTelegram(),
+        oldTelegram(),
         getLangCode({ phone }),
         sessionInfo,
         {
@@ -1066,7 +1066,7 @@ export async function createSingleSimpleClient(props) {
     const session = new StoreSession();
     sessionInfo = _.assign(
         {},
-        tgClientType.newTelegram(),
+        oldTelegram(),
         getLangCode({ phone }),
         sessionInfo,
         {

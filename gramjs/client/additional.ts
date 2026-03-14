@@ -11,7 +11,6 @@ import * as crypto from "crypto";
 import template from "string-template";
 import codes from "iso-lang-codes";
 import { parsePhoneNumber, isValidPhoneNumber } from "libphonenumber-js";
-import { serializeGramjsSession } from "@mtcute/convert";
 import {
     Api,
     sessions,
@@ -156,9 +155,25 @@ export const getInitConnection = (sessionInfo) => {
             value: params,
         }),
     };
-
     return initRequest;
 };
+
+function serializeGramjsSession(session) {
+    const authKey = Buffer.from(session.authKey);
+    if (authKey.length !== 256) {
+        throw new Error("authKey must be 256 bytes long");
+    }
+    const ipEncoded = Buffer.from(session.ipAddress, "utf-8");
+    const u8 = Buffer.alloc(261 + ipEncoded.length);
+    let pos = 0;
+    pos = u8.writeUInt8(session.dcId, pos);
+    pos = u8.writeUInt16BE(ipEncoded.length, pos);
+    ipEncoded.copy(u8, pos);
+    pos += ipEncoded.length;
+    pos = u8.writeUInt16BE(session.port, pos);
+    authKey.copy(u8, pos);
+    return `1${u8.toString("base64")}`;
+}
 
 export const saveStringSession = (data) => {
     const stringSession = serializeGramjsSession(

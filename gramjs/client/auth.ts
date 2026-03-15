@@ -383,6 +383,8 @@ export async function sendCode(
         );
         if (sendResult instanceof Api.auth.SentCodeSuccess)
             throw new Error("logged in right after sending the code");
+        if (sendResult instanceof Api.auth.SentCodePaymentRequired)
+            throw new Error("Payment is required for sending the code");
 
         // If we already sent a SMS, do not resend the phoneCode (hash may be empty)
         if (!forceSMS || sendResult.type instanceof Api.auth.SentCodeTypeSms) {
@@ -401,6 +403,8 @@ export async function sendCode(
         );
         if (resendResult instanceof Api.auth.SentCodeSuccess)
             throw new Error("logged in right after resending the code");
+        if (resendResult instanceof Api.auth.SentCodePaymentRequired)
+            throw new Error("Payment is required for sending the code");
 
         return {
             phoneCodeHash: resendResult.phoneCodeHash,

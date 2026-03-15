@@ -85,6 +85,38 @@ export function _handleUpdate(
         }
     }
 
+    if (update instanceof Api.UpdateChannelTooLong) {
+        const channelId = update.channelId;
+        client._log.info(
+            `Received UpdateChannelTooLong for channel ${channelId}. Attempting to fetch latest messages.`
+        );
+
+        (async () => {
+            try {
+                const inputPeer = await client.getInputEntity(
+                    new Api.PeerChannel({ channelId: returnBigInt(channelId) })
+                );
+                const messages = await client.getMessages(inputPeer, {
+                    limit: 5,
+                });
+
+                for (const msg of messages.reverse()) {
+                    const newUpdate = new Api.UpdateNewChannelMessage({
+                        message: msg,
+                        pts: 0,
+                        ptsCount: 0,
+                    });
+                    _handleUpdate(client, newUpdate);
+                }
+            } catch (err) {
+                client._log.error(
+                    `Failed to handle UpdateChannelTooLong: ${err}`
+                );
+            }
+        })();
+        return;
+    }
+
     //this.session.processEntities(update)
     client._entityCache.add(update);
     client.session.processEntities(update);

@@ -1000,9 +1000,18 @@ export function getInputMedia(
             }
 
             correctAnswers = [];
+            const pollAnswers = media.poll.answers.filter(
+                (answer): answer is Api.PollAnswer =>
+                    answer instanceof Api.PollAnswer
+            );
             for (const r of media.results.results) {
                 if (r.correct) {
-                    correctAnswers.push(r.option);
+                    const index = pollAnswers.findIndex((answer) =>
+                        Buffer.from(answer.option).equals(Buffer.from(r.option))
+                    );
+                    if (index !== -1) {
+                        correctAnswers.push(index);
+                    }
                 }
             }
         } else {

@@ -1022,33 +1022,37 @@ export class CustomMessage extends SenderGetter {
             });
         }
         if (this.poll) {
-            function findPoll(answers: Api.PollAnswer[]) {
+            function findPoll(answers: Api.TypePollAnswer[]) {
+                const pollAnswers = answers.filter(
+                    (answer): answer is Api.PollAnswer =>
+                        answer instanceof Api.PollAnswer
+                );
                 if (i != undefined) {
                     if (Array.isArray(i)) {
                         const corrects = [];
                         for (let x = 0; x < i.length; x++) {
-                            corrects.push(answers[x].option);
+                            corrects.push(pollAnswers[x].option);
                         }
                         return corrects;
                     }
-                    return [answers[i].option];
+                    return [pollAnswers[i].option];
                 }
                 if (text != undefined) {
                     if (typeof text == "function") {
-                        for (const answer of answers) {
+                        for (const answer of pollAnswers) {
                             if (text(answer.text)) {
                                 return [answer.option];
                             }
                         }
                     } else {
-                        for (const answer of answers) {
-                                return [answer.option];
+                        for (const answer of pollAnswers) {
+                            return [answer.option];
                         }
                     }
                     return;
                 }
                 if (filter != undefined) {
-                    for (const answer of answers) {
+                    for (const answer of pollAnswers) {
                         if (filter(answer)) {
                             return [answer.option];
                         }
